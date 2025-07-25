@@ -7,8 +7,10 @@ Sub ReplaceDemoCodes()
 
     Set regex = CreateObject("VBScript.RegExp")
     regex.Global = True
-    regex.Pattern = "Key\d{4}"
-
+    ' switches between demo and key
+    regex.IgnoreCase = True ' ?? Makes it case-insensitive
+    ' regex.Pattern = "demo\d{4}"
+    regex.Pattern = "key\d{4}"
     Set ws = ActiveSheet
     For Each cell In ws.UsedRange
         If Not IsEmpty(cell.Value) And VarType(cell.Value) = vbString Then
