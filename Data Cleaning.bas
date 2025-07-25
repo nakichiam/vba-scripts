@@ -1,4 +1,9 @@
 Attribute VB_Name = "Module1"
+Option Compare Text
+' is a directive you can place at the top of a VBA module to make string comparisons case-insensitive within that module.
+' "apple" = "Apple"    ' ? False (by default)
+' With Option Compare Test:  "apple" = "Apple"    ' ? True
+
 'Replace demoXXXX with License
 Sub ReplaceDemoCodes()
     Dim cell As Range
@@ -58,10 +63,6 @@ Sub RemoveRedactedWords()
         End If
     Next cell
 End Sub
-
-Option Compare Text
-
-Option Compare Text
 
 Sub RemoveGreetingLines()
     Dim cell As Range
