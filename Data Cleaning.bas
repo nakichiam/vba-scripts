@@ -41,3 +41,51 @@ Sub ClearRowsWithRedactedInWord()
     Next r
 End Sub
 
+Sub RemoveRedactedWords()
+    Dim cell As Range
+    Dim re As Object
+    Set re = CreateObject("VBScript.RegExp")
+    
+    re.Pattern = "\S*email\s*redacted\S*"
+    re.Global = True
+    re.IgnoreCase = True
+    
+    For Each cell In Selection
+        If Not IsEmpty(cell.Value) Then
+            cell.Value = re.Replace(cell.Value, "")
+        End If
+    Next cell
+End Sub
+
+Option Compare Text
+
+Option Compare Text
+
+Sub RemoveGreetingLines()
+    Dim cell As Range
+    Dim lines As Variant
+    Dim result As String
+    Dim i As Integer
+    Dim skip As Boolean
+
+    For Each cell In Selection
+        lines = Split(cell.Value, vbCrLf)
+        result = ""
+        For i = LBound(lines) To UBound(lines)
+            skip = False
+            If lines(i) Like "Hello*" _
+            Or lines(i) Like "Hi*" _
+            Or lines(i) Like "Good morning*" _
+            Or lines(i) Like "Good afternoon*" _
+            Or lines(i) Like "Best regards*" _
+            Or lines(i) Like "Kind regards*" _
+            Or lines(i) Like "Dear*" Then
+                skip = True
+            End If
+            If Not skip Then result = result & lines(i) & vbCrLf
+        Next i
+        cell.Value = Trim(result)
+    Next cell
+End Sub
+
+
